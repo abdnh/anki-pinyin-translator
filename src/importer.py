@@ -1,12 +1,11 @@
-from typing import Generator, Sequence
 import csv
+from typing import Generator, Sequence
 
 from anki.collection import Collection
 from anki.decks import DeckId
 
-
-from .translator import PinyinTranslator
 from .notetype import PinyinNotetype
+from .translator import PinyinTranslator
 
 
 class PinyinImporter:

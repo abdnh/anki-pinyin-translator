@@ -1,20 +1,18 @@
-from concurrent.futures import Future
 import os
 import sys
+from concurrent.futures import Future
 from time import time
 
-from aqt import mw
+from aqt import gui_hooks, mw
 from aqt.qt import *
 from aqt.studydeck import StudyDeck
 from aqt.utils import getFile, tooltip
-from aqt import gui_hooks
-
 
 ADDON_DIR = os.path.dirname(__file__)
 sys.path.append(os.path.join(ADDON_DIR, "vendor"))
 
-from .notetype import PinyinNotetype
 from .importer import PinyinImporter
+from .notetype import PinyinNotetype
 
 
 def on_import() -> None:

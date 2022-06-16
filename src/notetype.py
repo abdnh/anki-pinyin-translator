@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 import enum
+from dataclasses import dataclass
+
 from anki.collection import Collection
 
 

@@ -15,8 +15,8 @@ vendor:
 	./venv/Scripts/pip install -r requirements.txt -t src/vendor
 
 fix:
-	python -m black src
-	python -m isort src
+	python -m black src --exclude=vendor
+	python -m isort src --skip=vendor
 
 mypy:
 	python -m mypy src
