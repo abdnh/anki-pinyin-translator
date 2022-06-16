@@ -1,5 +1,5 @@
 import csv
-from typing import Generator, Sequence
+from typing import Generator, Sequence, Type
 
 from anki.collection import Collection
 from anki.decks import DeckId
@@ -14,15 +14,15 @@ class PinyinImporter:
         self.words: list[str] = []
         self._read_files(files)
 
-    def _read_files(self, files: Sequence[str]):
+    def _read_files(self, files: Sequence[str]) -> None:
         for file in files:
-            with open(file, "r", newline="") as stream:
+            with open(file, "r", newline="", encoding="utf-8") as stream:
                 reader = csv.reader(stream)
                 for row in reader:
                     self.words.append(row[0])
 
     def import_to_deck(
-        self, did: DeckId, notetype_info: PinyinNotetype
+        self, did: DeckId, notetype_info: Type[PinyinNotetype]
     ) -> Generator[None, None, None]:
         translator = PinyinTranslator()
         notetype = self.col.models.by_name(notetype_info.NAME)

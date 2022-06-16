@@ -11,6 +11,7 @@ from aqt.utils import getFile, tooltip
 ADDON_DIR = os.path.dirname(__file__)
 sys.path.append(os.path.join(ADDON_DIR, "vendor"))
 
+# pylint: disable=wrong-import-position
 from .importer import PinyinImporter
 from .notetype import PinyinNotetype
 
@@ -26,7 +27,6 @@ def on_import() -> None:
     if not deck:
         return
     did = mw.col.decks.by_name(deck)["id"]
-    notetype_info = PinyinNotetype(mw.col)
     importer = PinyinImporter(mw.col, files)
     total_words = len(importer.words)
     want_cancel = False
@@ -38,13 +38,13 @@ def on_import() -> None:
 
     def task() -> int:
         i = 0
-        t1 = time()
-        for i, _ in enumerate(importer.import_to_deck(did, notetype_info), start=1):
-            if time() - t1 >= 1.0:
+        last_progress_update = time()
+        for i, _ in enumerate(importer.import_to_deck(did, PinyinNotetype), start=1):
+            if time() - last_progress_update >= 1.0:
                 mw.taskman.run_on_main(lambda i=i + 1: update_progress(i))
                 if want_cancel:
                     break
-                t1 = time()
+                last_progress_update = time()
         return i
 
     def on_done(fut: Future) -> None:
@@ -63,7 +63,7 @@ def on_init() -> None:
     action = QAction("Import English wordlist with Pinyin", mw)
     qconnect(action.triggered, on_import)
     mw.form.menuTools.addAction(action)
-    PinyinNotetype(mw.col).ensure_exists()
+    PinyinNotetype.ensure_exists(mw.col)
 
 
 gui_hooks.main_window_did_init.append(on_init)

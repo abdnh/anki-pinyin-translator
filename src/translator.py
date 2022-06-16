@@ -14,7 +14,7 @@ class PinyinData:
 class PinyinTranslator:
     DEST_LANG = "zh-CN"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.translator = Translator()
 
     def lookup(self, word: str, lang: str = "en") -> PinyinData:
