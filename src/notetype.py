@@ -44,4 +44,5 @@ class PinyinNotetype:
             template["qfmt"] = template_info.qfmt
             template["afmt"] = template_info.afmt
             col.models.add_template(notetype, template)
+        # TODO: maybe use update_dict in newer versions
         col.models.save(notetype)

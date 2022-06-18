@@ -3,6 +3,7 @@ from typing import Generator, Sequence, Type
 
 from anki.collection import Collection
 from anki.decks import DeckId
+from anki.notes import NoteFieldsCheckResult
 
 from .notetype import PinyinNotetype
 from .translator import PinyinTranslator
@@ -27,14 +28,18 @@ class PinyinImporter:
         translator = PinyinTranslator()
         notetype = self.col.models.by_name(notetype_info.NAME)
         for word in self.words:
-            # TODO: maybe do not bail out on first error encountered
-            data = translator.lookup(word)
             note = self.col.new_note(notetype)
-            note[notetype_info.Fields.EN_FIELD.value] = data.en_word
-            note[notetype_info.Fields.PINYIN_FIELD.value] = data.pinyin
-            audio_filename = self.col.media.write_data(
-                f"{data.en_word}_{translator.DEST_LANG}.mp3", data.audio
-            )
-            note[notetype_info.Fields.AUDIO_FIELD.value] = f"[sound:{audio_filename}]"
-            self.col.add_note(note, did)
+            note[notetype_info.Fields.EN_FIELD.value] = word
+            check_result = note.fields_check()
+            if check_result != NoteFieldsCheckResult.DUPLICATE:
+                # TODO: maybe do not bail out on first error encountered
+                data = translator.lookup(word)
+                note[notetype_info.Fields.PINYIN_FIELD.value] = data.pinyin
+                audio_filename = self.col.media.write_data(
+                    f"{data.en_word}_{translator.DEST_LANG}.mp3", data.audio
+                )
+                note[
+                    notetype_info.Fields.AUDIO_FIELD.value
+                ] = f"[sound:{audio_filename}]"
+                self.col.add_note(note, did)
             yield
