@@ -62,6 +62,7 @@ def on_import() -> None:
         tooltip(f"Imported {count} words", parent=mw)
 
     mw.progress.start(total_words, label="Importing words...", parent=mw)
+    mw.progress.set_title("Pinyin Translator")
     mw.taskman.run_in_background(task, on_done)
 
 
