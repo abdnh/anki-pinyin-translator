@@ -11,6 +11,7 @@ $(PACKAGE_NAME).ankiaddon: src/*
 	rm -rf src/meta.json
 	( cd src/; zip -r ../$@ * )
 
+# TODO: certainly, there is a better way than this...
 vendor:
 	./venv/Scripts/pip install -r requirements.txt -t src/vendor
 

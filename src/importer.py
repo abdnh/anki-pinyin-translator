@@ -27,6 +27,7 @@ class PinyinImporter:
         translator = PinyinTranslator()
         notetype = self.col.models.by_name(notetype_info.NAME)
         for word in self.words:
+            # TODO: maybe do not bail out on first error encountered
             data = translator.lookup(word)
             note = self.col.new_note(notetype)
             note[notetype_info.Fields.EN_FIELD.value] = data.en_word
