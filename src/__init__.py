@@ -1,3 +1,4 @@
+import functools
 import os
 import sys
 from concurrent.futures import Future
@@ -46,7 +47,7 @@ def on_import() -> None:
         last_progress_update = time()
         for i, _ in enumerate(importer.import_to_deck(did, PinyinNotetype), start=1):
             if time() - last_progress_update >= 1.0:
-                mw.taskman.run_on_main(lambda i=i + 1: update_progress(i))
+                mw.taskman.run_on_main(functools.partial(update_progress, i=i + 1))
                 if want_cancel:
                     break
                 last_progress_update = time()

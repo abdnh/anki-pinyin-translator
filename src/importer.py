@@ -9,7 +9,7 @@ from .translator import PinyinTranslator
 
 
 class PinyinImporter:
-    def __init__(self, col: Collection, files: Sequence[str]):  # , did: DeckId
+    def __init__(self, col: Collection, files: Sequence[str]):
         self.col = col
         self.words: list[str] = []
         self._read_files(files)
