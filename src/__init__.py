@@ -28,7 +28,7 @@ def on_import() -> None:
     )
     if not files:
         return
-    study_deck = StudyDeck(mw, title="Choose deck to import words to")
+    study_deck = StudyDeck(mw, title="Choose deck to import words to", accept="Choose")
     deck = study_deck.name
     if not deck:
         return
