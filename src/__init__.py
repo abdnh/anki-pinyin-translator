@@ -60,7 +60,7 @@ def on_import() -> None:
 
 
 def on_init() -> None:
-    action = QAction("Import English wordlist with Pinyin", mw)
+    action = QAction("Import English wordlist and generate Pinyin", mw)
     qconnect(action.triggered, on_import)
     mw.form.menuTools.addAction(action)
     PinyinNotetype.ensure_exists(mw.col)
