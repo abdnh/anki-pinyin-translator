@@ -46,7 +46,7 @@ def on_import() -> None:
         i = 0
         last_progress_update = time()
         for i, _ in enumerate(importer.import_to_deck(did, PinyinNotetype), start=1):
-            if time() - last_progress_update >= 1.0:
+            if time() - last_progress_update >= 0.1:
                 mw.taskman.run_on_main(functools.partial(update_progress, i=i + 1))
                 if want_cancel:
                     break
