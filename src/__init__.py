@@ -18,7 +18,12 @@ from .notetype import PinyinNotetype
 
 def on_import() -> None:
     files = getFile(
-        mw, title="Choose CSV files to import", cb=None, filter="(*.csv *.txt)", multi=True
+        mw,
+        title="Choose CSV files to import",
+        cb=None,
+        key="pinyin_translator",
+        filter="(*.csv *.txt)",
+        multi=True,
     )
     if not files:
         return
